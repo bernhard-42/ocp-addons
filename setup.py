@@ -65,11 +65,5 @@ setup(
     extras_require={"test": "pytest"},
     cmdclass={"build_ext": build_ext},
     zip_safe=False,
-    extras_require={
-        "dev": [
-            "pytest",
-            "build123d",
-        ]
-    },
     python_requires=">=3.9",
 )
