@@ -1,8 +1,9 @@
+import os
+import platform
+from pathlib import Path
+
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
-import os
-from pathlib import Path
-import platform
 
 __version__ = "0.1.0"
 description = "Addon packages for OCP"
@@ -24,19 +25,22 @@ here = Path(__file__).resolve().parent
 
 occt_sdk = os.environ("OCCT_SDK", str(here / "occt"))
 
-include_dirs = [str(occt_sdk / "include/opencascade")]
-library_dirs = [str(occt_sdk / "lib")]
-
 extra_compile_args = ["-O3"]
 extra_link_args = []
 
 if platform.system() == "Linux":
-    ...
+    include_dirs = [str(occt_sdk / "include/opencascade")]
+    library_dirs = [str(occt_sdk / "lib")]
 
 elif platform.system() == "Darwin":
-    extra_compile_args.extend([
-        "-mmacosx-version-min=11.1",
-    ])
+    include_dirs = [str(occt_sdk / "include/opencascade")]
+    library_dirs = [str(occt_sdk / "lib")]
+
+    extra_compile_args.extend(
+        [
+            "-mmacosx-version-min=11.1",
+        ]
+    )
     extra_link_args.extend(
         [
             "-Wl,-headerpad_max_install_names",
@@ -45,7 +49,8 @@ elif platform.system() == "Darwin":
     )
 
 elif platform.system() == "Windows":
-    pass
+    include_dirs = [str(occt_sdk / "win64/vc14/inc")]
+    library_dirs = [str(occt_sdk / "win64/vc14/lib")]
 
 else:
     raise RuntimeError(f"Platform {platform.system()} is not supported")
