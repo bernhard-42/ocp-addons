@@ -49,7 +49,7 @@ elif platform.system() == "Darwin":
     )
 
 elif platform.system() == "Windows":
-    include_dirs = [str(occt_sdk / "win64/vc14/inc")]
+    include_dirs = [str(occt_sdk / "inc")]
     library_dirs = [str(occt_sdk / "win64/vc14/lib")]
 
 else:
