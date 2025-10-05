@@ -23,10 +23,12 @@ occ_libs = [
 
 here = Path(__file__).resolve().parent
 
-occt_sdk = os.environ("OCCT_SDK", str(here / "occt"))
+occt_sdk = os.environ.get("OCCT_SDK", str(here / "occt"))
 
 extra_compile_args = ["-O3"]
 extra_link_args = []
+
+print("setup.py: platform.system", platform.system())
 
 if platform.system() == "Linux":
     include_dirs = [str(occt_sdk / "include/opencascade")]
@@ -55,6 +57,8 @@ elif platform.system() == "Windows":
 else:
     raise RuntimeError(f"Platform {platform.system()} is not supported")
 
+print("setup.py: include_dirs", include_dirs)
+print("setup.py: library_dirs", library_dirs)
 
 ext_modules = [
     Pybind11Extension(
